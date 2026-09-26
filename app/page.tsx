@@ -21,13 +21,13 @@ export default function Home() {
   return (
     <>
       {/* Hero Section */}
-      <section className="mt-6 grid items-center gap-8 rounded-3xl border border-[#23272f]/60 bg-[#14171d] px-8 py-12 sm:px-12 md:grid-cols-[1.15fr_0.85fr] lg:px-16 lg:py-16">
+      <section className="mt-6 grid items-center gap-8 rounded-[24px] border border-[#23272f]/60 bg-[#14171d] px-8 py-12 sm:px-12 md:grid-cols-[1.15fr_0.85fr] lg:px-16 lg:py-16">
         <div className="flex flex-col items-start">
           <p className="text-[12px] font-extrabold uppercase tracking-[0.25em] text-[#c6ff00]">
             WORKOUT LIBRARY
           </p>
           
-          <h1 className="mt-4 max-w-145 font-sans text-5xl font-black uppercase tracking-tight text-white sm:text-6xl lg:text-[3.75rem] lg:leading-[0.95]">
+          <h1 className="mt-4 max-w-[580px] font-sans text-5xl font-black uppercase tracking-tight text-white sm:text-6xl lg:text-[3.75rem] lg:leading-[0.95]">
             Train with intent. Log every set.
           </h1>
           
@@ -49,7 +49,7 @@ export default function Home() {
             src={logoImg}
             alt="Workout illustration"
             priority
-            className="h-auto max-h-115 w-full max-w-105 object-contain"
+            className="h-auto max-h-[460px] w-full max-w-[420px] object-contain"
           />
         </div>
       </section>
@@ -82,7 +82,7 @@ export default function Home() {
                 alt={w.title}
                 width={700}
                 height={400}
-                className="aspect-video w-full object-cover"
+                className="aspect-[16/9] w-full object-cover"
               />
               <div className="space-y-2.5 p-5">
                 <div className="flex flex-wrap gap-1.5">
