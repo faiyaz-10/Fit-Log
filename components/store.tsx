@@ -35,7 +35,7 @@ export default function Store({ children }: { children: ReactNode }) {
       setPlan(s.plan || []);
       setSaved(s.saved || []);
       setDone(s.done || []);
-    } catch {}
+    } catch { }
     setReady(true);
   }, []);
   useEffect(() => {
@@ -83,7 +83,7 @@ export default function Store({ children }: { children: ReactNode }) {
       {msg && (
         <div
           role="status"
-          className="fixed bottom-6 left-1/2 z-50 -translate-x-1/2 rounded-full bg-accent px-5 py-2.5 text-sm font-semibold text-black shadow-lg"
+          className="fixed top-6 right-6 z-50 rounded-lg border border-[#374151] bg-[#1f2937] px-5 py-3 text-sm font-semibold text-white shadow-xl"
         >
           {msg}
         </div>
