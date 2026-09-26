@@ -83,7 +83,7 @@ export default function Store({ children }: { children: ReactNode }) {
       {msg && (
         <div
           role="status"
-          className="fixed top-6 right-6 z-50 rounded-lg border border-[#374151] bg-[#1f2937] px-5 py-3 text-sm font-semibold text-white shadow-xl"
+          className="fixed top-6 right-6 z-50 rounded-lg border border-[#c6ff00] bg-[#c6ff00] px-5 py-3 text-sm font-bold text-black shadow-[0_8px_30px_rgba(198,255,0,0.28)]"
         >
           {msg}
         </div>
