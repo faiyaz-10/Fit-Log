@@ -1,12 +1,18 @@
 "use client";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { Bebas_Neue } from "next/font/google";
 import { getAll, type Workout } from "@/lib/api";
 import { Stats } from "@/components/stats";
 import Image from "next/image";
 import logoImg from "../assets/banner.png";
 
 type SortOption = "Duration" | "Calories" | "Rating";
+
+const bebasNeue = Bebas_Neue({
+  weight: "400",
+  subsets: ["latin"],
+});
 
 export default function Home() {
   const [items, setItems] = useState<Workout[]>([]);
@@ -46,8 +52,11 @@ export default function Home() {
             WORKOUT LIBRARY
           </p>
 
-          <h1 className="mt-4 max-w-[580px] font-sans text-5xl font-black uppercase tracking-tight text-white sm:text-6xl lg:text-[3.75rem] lg:leading-[0.95]">
-            Train with intent. Log every set.
+          <h1
+            className={`${bebasNeue.className} mt-4 max-w-[580px] text-5xl font-normal uppercase leading-[0.9] tracking-[0.02em] text-white sm:text-6xl lg:text-[3.75rem]`}
+          >
+            <span className="block lg:whitespace-nowrap">TRAIN WITH INTENT. LOG</span>
+            <span className="block">EVERY SET.</span>
           </h1>
 
           <p className="mt-6 max-w-lg text-[15px] font-normal leading-relaxed text-[#9ca3af]">

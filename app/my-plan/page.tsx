@@ -42,10 +42,11 @@ export default function MyPlan() {
   const tabBtn = (id: Tab, label: string) => (
     <button
       onClick={() => setTab(id)}
-      className={`rounded-lg px-5 py-2 text-[13px] font-bold transition-colors ${tab === id
+      className={`rounded-lg px-5 py-2 text-[13px] font-bold transition-colors ${
+        tab === id
           ? "bg-[#1c222b] text-white shadow-sm"
           : "text-[#9ca3af] hover:text-white"
-        }`}
+      }`}
     >
       {label}
     </button>
@@ -75,8 +76,9 @@ export default function MyPlan() {
           <div key={label} className="px-6 first:pl-0 last:pr-0 sm:px-10">
             <p className="text-[13px] font-medium text-[#9ca3af]">{label}</p>
             <p
-              className={`${bebasNeue.className} mt-2 text-[48px] font-normal leading-none sm:text-[64px] ${isAccent ? "text-[#c6ff00]" : "text-white"
-                }`}
+              className={`${bebasNeue.className} mt-2 text-[48px] font-normal leading-none sm:text-[64px] ${
+                isAccent ? "text-[#c6ff00]" : "text-white"
+              }`}
             >
               {val}
             </p>
@@ -162,8 +164,9 @@ export default function MyPlan() {
             return (
               <li
                 key={w.id}
-                className={`flex flex-col gap-5 rounded-[20px] border border-[#23272f]/80 bg-[#14171d] p-5 sm:flex-row sm:items-center sm:p-6 ${isDone ? "opacity-60" : ""
-                  }`}
+                className={`flex flex-col gap-5 rounded-[20px] border border-[#23272f]/80 bg-[#14171d] p-5 sm:flex-row sm:items-center sm:p-6 ${
+                  isDone ? "opacity-60" : ""
+                }`}
               >
                 <img
                   src={w.image}
