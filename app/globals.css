@@ -2,40 +2,56 @@
 @plugin "daisyui";
 
 @theme {
-  --color-bg: #0b0d0f;
-  --color-card: #13181b;
-  --color-line: #2c3339;
-  --color-accent: #b8f52d;
-  --font-display: var(--font-oswald);
-  --font-sans: var(--font-inter);
+  --color-bg: #0a0c0e;
+  --color-card: #14171d;
+  --color-line: #23272f;
+  --color-accent: #c6ff00;
+  --color-muted: #8b949e;
+  --font-display: var(--font-bebas), "Bebas Neue", Impact, sans-serif;
+  --font-sans: var(--font-inter), Inter, sans-serif;
 }
 
 html {
-  background: #0b0d0f;
+  background-color: #0a0c0e;
 }
 
 body {
-  @apply bg-bg font-sans text-neutral-200;
-  background: #0b0d0f;
+  background-color: #0a0c0e;
   color: #f3f4f6;
+  font-family: var(--font-sans);
 }
 
 main {
   min-height: calc(100vh - 200px);
 }
 
+/* Button Styles */
 .btn {
-  @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-2.5 text-[11px] font-bold uppercase tracking-[0.08em] transition disabled:cursor-not-allowed disabled:opacity-50;
+  @apply inline-flex items-center justify-center gap-2 rounded-xl px-5 py-2.5 text-[12px] font-extrabold uppercase tracking-wide transition-all active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50;
 }
 
 .btn-primary {
-  @apply bg-accent text-black hover:brightness-110;
+  @apply bg-[#c6ff00] text-black hover:brightness-110;
 }
 
 .btn-outline {
-  @apply border border-line text-white hover:bg-white/5;
+  @apply border border-[#2e353f] bg-transparent text-white hover:border-[#c6ff00]/60 hover:bg-white/5;
 }
 
+/* Exact Pill Style from the cards */
 .pill {
-  @apply rounded-full bg-accent px-2.5 py-0.5 text-[10px] font-black uppercase tracking-[0.08em] text-black;
+  @apply inline-flex items-center rounded-full bg-[#c6ff00] px-2.5 py-0.5 text-[10px] font-black uppercase tracking-[0.04em] text-black;
+}
+
+/* Card Typography & Helper Classes */
+.card-title {
+  @apply font-display text-[22px] font-normal uppercase leading-tight tracking-[0.02em] text-white;
+}
+
+.card-subtitle {
+  @apply text-[12px] font-normal text-[#8b949e];
+}
+
+.card-meta {
+  @apply flex items-center gap-4 text-[11px] font-medium text-[#8b949e];
 }

@@ -26,16 +26,16 @@ export default function Home() {
           <p className="text-[12px] font-extrabold uppercase tracking-[0.25em] text-[#c6ff00]">
             WORKOUT LIBRARY
           </p>
-          
+
           <h1 className="mt-4 max-w-[580px] font-sans text-5xl font-black uppercase tracking-tight text-white sm:text-6xl lg:text-[3.75rem] lg:leading-[0.95]">
             Train with intent. Log every set.
           </h1>
-          
+
           <p className="mt-6 max-w-lg text-[15px] font-normal leading-relaxed text-[#9ca3af]">
             FitLog is a dark, no-nonsense gym companion: pick a lift, lock it
             into today&apos;s plan, and watch the week&apos;s work add up.
           </p>
-          
+
           <a
             href="#library"
             className="mt-8 inline-flex items-center justify-center rounded-lg bg-[#c6ff00] px-7 py-3 text-[13px] font-extrabold uppercase tracking-wide text-black transition-all hover:brightness-110 active:scale-[0.98]"
@@ -92,10 +92,10 @@ export default function Home() {
                     </span>
                   ))}
                 </div>
-                <h3 className="font-sans text-[1.15rem] font-black uppercase leading-tight tracking-tight text-white">
+                <h3 className="font-display text-[14px] font-bold uppercase leading-tight tracking-[0.02em] text-white">
                   {w.title}
                 </h3>
-                <p className="text-[12px] font-medium text-[#9ca3af]">{w.equipment}</p>
+                <p className="font-display text-[10px] font-normal text-[#8f96a3]">{w.equipment}</p>
                 <div className="border-t border-[#23272f] pt-3">
                   <Stats w={w} />
                 </div>
