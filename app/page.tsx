@@ -20,60 +20,71 @@ export default function Home() {
 
   return (
     <>
-      <section className="mt-8 grid items-center gap-8 rounded-[18px] border border-[#2b3338] bg-[#0d1013] p-6 sm:p-8 md:grid-cols-[1.2fr_0.8fr] md:py-10">
-        <div>
-          <p className="text-[11px] font-bold tracking-[0.22em] text-[#b8f52d]">
+      {/* Hero Section */}
+      <section className="mt-6 grid items-center gap-8 rounded-[24px] border border-[#23272f]/60 bg-[#14171d] px-8 py-12 sm:px-12 md:grid-cols-[1.15fr_0.85fr] lg:px-16 lg:py-16">
+        <div className="flex flex-col items-start">
+          <p className="text-[12px] font-extrabold uppercase tracking-[0.25em] text-[#c6ff00]">
             WORKOUT LIBRARY
           </p>
-          <h1 className="mt-3 max-w-[560px] font-display text-[clamp(2.5rem,4vw,5rem)] font-bold uppercase leading-[0.92] tracking-[-0.04em] text-white">
+          
+          <h1 className="mt-4 max-w-[580px] font-sans text-5xl font-black uppercase tracking-tight text-white sm:text-6xl lg:text-[3.75rem] lg:leading-[0.95]">
             Train with intent. Log every set.
           </h1>
-          <p className="mt-4 max-w-md text-[14px] leading-6 text-zinc-400">
+          
+          <p className="mt-6 max-w-lg text-[15px] font-normal leading-relaxed text-[#9ca3af]">
             FitLog is a dark, no-nonsense gym companion: pick a lift, lock it
-            into todays plan, and watch the weeks work add up.
+            into today&apos;s plan, and watch the week&apos;s work add up.
           </p>
-          <a href="#library" className="btn btn-primary mt-6">
-            BROWSE WORKOUTS ↓
+          
+          <a
+            href="#library"
+            className="mt-8 inline-flex items-center justify-center rounded-lg bg-[#c6ff00] px-7 py-3 text-[13px] font-extrabold uppercase tracking-wide text-black transition-all hover:brightness-110 active:scale-[0.98]"
+          >
+            BROWSE WORKOUTS
           </a>
         </div>
-        <Image
-          src={logoImg}
-          alt="Workout illustration"
-          priority
-          className="mx-auto h-auto max-h-[320px] w-full max-w-[360px] object-contain"
-        />
+
+        <div className="flex items-center justify-center">
+          <Image
+            src={logoImg}
+            alt="Workout illustration"
+            priority
+            className="h-auto max-h-[460px] w-full max-w-[420px] object-contain"
+          />
+        </div>
       </section>
 
-      <section id="library" className="mt-14 scroll-mt-6">
-        <h2 className="font-display text-[2rem] font-bold uppercase tracking-[-0.04em] text-white">
+      {/* Library Section */}
+      <section id="library" className="mt-16 scroll-mt-6">
+        <h2 className="font-sans text-3xl font-black uppercase tracking-tight text-white sm:text-4xl">
           The Library
         </h2>
-        <p className="mt-1 text-[12px] text-zinc-400">
+        <p className="mt-2 text-[14px] font-medium text-[#9ca3af]">
           Twelve lifts covering every major muscle group.
         </p>
 
         {loading && (
           <div className="flex justify-center py-20" aria-label="Loading">
-            <div className="h-10 w-10 animate-spin rounded-full border-4 border-line border-t-accent" />
+            <div className="h-10 w-10 animate-spin rounded-full border-4 border-[#23272f] border-t-[#c6ff00]" />
           </div>
         )}
         {err && <p className="py-10 text-center text-red-400">{err}</p>}
 
-        <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {items.map((w) => (
             <Link
               key={w.id}
               href={`/workout/${w.id}`}
-              className="group overflow-hidden rounded-xl border border-[#2b3035] bg-[#12171b] transition hover:border-[#b8f52d]/60"
+              className="group overflow-hidden rounded-2xl border border-[#23272f] bg-[#14171d] transition duration-200 hover:border-[#c6ff00]/60"
             >
               <Image
                 src={w.image}
                 alt={w.title}
-                width={740}
-                height={416}
+                width={700}
+                height={400}
                 className="aspect-[16/9] w-full object-cover"
               />
-              <div className="space-y-2 p-4">
+              <div className="space-y-2.5 p-5">
                 <div className="flex flex-wrap gap-1.5">
                   {w.categories.map((c) => (
                     <span key={c} className="pill">
@@ -81,11 +92,11 @@ export default function Home() {
                     </span>
                   ))}
                 </div>
-                <h3 className="font-display text-[1.15rem] font-bold uppercase leading-none tracking-[0.02em] text-white">
+                <h3 className="font-sans text-[1.15rem] font-black uppercase leading-tight tracking-tight text-white">
                   {w.title}
                 </h3>
-                <p className="text-[11px] text-zinc-400">{w.equipment}</p>
-                <div className="border-t border-[#2a3036] pt-3">
+                <p className="text-[12px] font-medium text-[#9ca3af]">{w.equipment}</p>
+                <div className="border-t border-[#23272f] pt-3">
                   <Stats w={w} />
                 </div>
               </div>
