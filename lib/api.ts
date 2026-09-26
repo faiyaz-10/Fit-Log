@@ -6,30 +6,40 @@ export type Workout = {
   duration: number; calories: number; rating: number; instructions: string[];
 };
 
+type ApiRecord = Record<string, unknown>;
+
 // Tolerant normaliser: works even if field names differ slightly.
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function norm(w: any): Workout {
+export function norm(w: ApiRecord): Workout {
   let cats: unknown = w.muscleGroups ?? w.categories ?? w.tags ?? w.category ?? w.muscles ?? [];
   if (!Array.isArray(cats)) cats = String(cats).split(',');
   let steps: unknown = w.instructions ?? w.steps ?? [];
   if (!Array.isArray(steps)) steps = String(steps).split(/\n|\./).filter(Boolean);
   return {
     id: String(w.id ?? w._id),
-    title: w.title ?? w.name ?? 'Workout',
-    description: w.description ?? w.subtitle ?? '',
-    image: w.image ?? w.thumbnail ?? w.img ?? w.imageUrl ?? '',
+    title: String(w.title ?? w.name ?? 'Workout'),
+    description: String(w.description ?? w.subtitle ?? ''),
+    image: String(w.image ?? w.thumbnail ?? w.img ?? w.imageUrl ?? ''),
     categories: (cats as unknown[]).map((c) => String(c).trim()).filter(Boolean),
-    equipment: Array.isArray(w.equipment) ? w.equipment.join(', ') : w.equipment ?? '',
-    difficulty: w.difficulty ?? w.level ?? '',
-    sets: w.sets ?? '',
-    reps: w.reps ?? '',
-    duration: parseFloat(w.duration ?? w.minutes ?? 0) || 0,
-    calories: parseFloat(w.caloriesBurned ?? w.calories ?? w.kcal ?? 0) || 0,
-    rating: parseFloat(w.rating ?? 0) || 0,
+    equipment: Array.isArray(w.equipment)
+      ? w.equipment.join(', ')
+      : String(w.equipment ?? ''),
+    difficulty: String(w.difficulty ?? w.level ?? ''),
+    sets: typeof w.sets === 'number' || typeof w.sets === 'string' ? w.sets : '',
+    reps: typeof w.reps === 'number' || typeof w.reps === 'string' ? w.reps : '',
+    duration: parseFloat(String(w.duration ?? w.minutes ?? 0)) || 0,
+    calories: parseFloat(String(w.caloriesBurned ?? w.calories ?? w.kcal ?? 0)) || 0,
+    rating: parseFloat(String(w.rating ?? 0)) || 0,
     instructions: steps as string[],
   };
 }
-const list = (j: any): any[] => (Array.isArray(j) ? j : j.data ?? j.workouts ?? j.items ?? []);
+const asRecord = (value: unknown): ApiRecord =>
+  typeof value === 'object' && value !== null ? (value as ApiRecord) : {};
+const list = (j: unknown): ApiRecord[] => {
+  if (Array.isArray(j)) return j.map(asRecord);
+  const record = asRecord(j);
+  const values = record.data ?? record.workouts ?? record.items ?? [];
+  return Array.isArray(values) ? values.map(asRecord) : [];
+};
 export async function getAll(): Promise<Workout[]> {
   const r = await fetch(BASE);
   if (!r.ok) throw new Error('Failed to load');
@@ -39,5 +49,6 @@ export async function getOne(id: string): Promise<Workout> {
   const r = await fetch(`${BASE}/${id}`);
   if (!r.ok) throw new Error('Not found');
   const j = await r.json();
-  return norm(j.data ?? j.workout ?? j);
+  const record = asRecord(j);
+  return norm(asRecord(record.data ?? record.workout ?? record));
 }

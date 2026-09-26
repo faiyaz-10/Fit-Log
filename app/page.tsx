@@ -6,10 +6,14 @@ import { Stats } from "@/components/stats";
 import Image from "next/image";
 import logoImg from "../assets/banner.png";
 
+type SortOption = "Duration" | "Calories" | "Rating";
+
 export default function Home() {
   const [items, setItems] = useState<Workout[]>([]);
   const [loading, setLoading] = useState(true);
   const [err, setErr] = useState("");
+  const [search, setSearch] = useState("");
+  const [sort, setSort] = useState<SortOption>("Duration");
 
   useEffect(() => {
     getAll()
@@ -17,6 +21,21 @@ export default function Home() {
       .catch(() => setErr("Could not load workouts. Try again."))
       .finally(() => setLoading(false));
   }, []);
+
+  const visibleItems = items
+    .filter((w) => {
+      const query = search.trim().toLowerCase();
+      return (
+        !query ||
+        w.title.toLowerCase().includes(query) ||
+        w.categories.some((category) => category.toLowerCase().includes(query))
+      );
+    })
+    .sort((a, b) => {
+      if (sort === "Calories") return a.calories - b.calories;
+      if (sort === "Rating") return b.rating - a.rating;
+      return a.duration - b.duration;
+    });
 
   return (
     <>
@@ -63,6 +82,45 @@ export default function Home() {
           Twelve lifts covering every major muscle group.
         </p>
 
+        <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <label className="sr-only" htmlFor="workout-search">
+            Search workouts
+          </label>
+          <input
+            id="workout-search"
+            value={search}
+            onChange={(event) => setSearch(event.target.value)}
+            placeholder="Search workouts or muscle groups"
+            className="w-full rounded-xl border border-[#23272f] bg-[#14171d] px-4 py-2.5 text-[13px] text-white placeholder:text-[#6b7280] focus:outline-none focus:ring-1 focus:ring-[#c6ff00] sm:max-w-sm"
+          />
+          <div className="flex items-center gap-3">
+            <label htmlFor="workout-sort" className="text-[13px] font-medium text-[#9ca3af]">
+              Sort By
+            </label>
+            <div className="relative">
+              <select
+                id="workout-sort"
+                value={sort}
+                onChange={(event) => setSort(event.target.value as SortOption)}
+                className="appearance-none rounded-xl border border-[#23272f] bg-[#14171d] py-2 pl-4 pr-9 text-[13px] font-semibold text-white focus:outline-none focus:ring-1 focus:ring-[#c6ff00]"
+              >
+                <option>Duration</option>
+                <option>Calories</option>
+                <option>Rating</option>
+              </select>
+              <svg
+                aria-hidden="true"
+                className="pointer-events-none absolute right-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-[#9ca3af]"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
+          </div>
+        </div>
+
         {loading && (
           <div className="flex justify-center py-20" aria-label="Loading">
             <div className="h-10 w-10 animate-spin rounded-full border-4 border-[#23272f] border-t-[#c6ff00]" />
@@ -71,7 +129,7 @@ export default function Home() {
         {err && <p className="py-10 text-center text-red-400">{err}</p>}
 
         <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {items.map((w) => (
+          {visibleItems.map((w) => (
             <Link
               key={w.id}
               href={`/workout/${w.id}`}
@@ -103,6 +161,11 @@ export default function Home() {
             </Link>
           ))}
         </div>
+        {!loading && !err && visibleItems.length === 0 && (
+          <p className="py-16 text-center text-sm font-medium text-[#9ca3af]">
+            No workouts match your search.
+          </p>
+        )}
       </section>
     </>
   );

@@ -28,15 +28,28 @@ export default function Store({ children }: { children: ReactNode }) {
   const [done, setDone] = useState<string[]>([]);
   const [ready, setReady] = useState(false);
   const [msg, setMsg] = useState("");
+  const [msgType, setMsgType] = useState<"success" | "error">("success");
 
   useEffect(() => {
-    try {
-      const s = JSON.parse(localStorage.getItem("fitlog") || "{}");
-      setPlan(s.plan || []);
-      setSaved(s.saved || []);
-      setDone(s.done || []);
-    } catch { }
-    setReady(true);
+    const timeout = setTimeout(() => {
+      try {
+        const stored = JSON.parse(localStorage.getItem("fitlog") || "{}");
+        const data = stored && typeof stored === "object" ? stored : {};
+        setPlan(Array.isArray(data.plan) ? data.plan : []);
+        setSaved(Array.isArray(data.saved) ? data.saved : []);
+        setDone(
+          Array.isArray(data.done)
+            ? data.done.filter((id: unknown): id is string => typeof id === "string")
+            : [],
+        );
+      } catch {
+        setPlan([]);
+        setSaved([]);
+        setDone([]);
+      }
+      setReady(true);
+    });
+    return () => clearTimeout(timeout);
   }, []);
   useEffect(() => {
     if (ready)
@@ -48,31 +61,41 @@ export default function Store({ children }: { children: ReactNode }) {
     return () => clearTimeout(t);
   }, [msg]);
 
-  const say = (m: string) => {
+  const say = (m: string, type: "success" | "error" = "success") => {
     setMsg("");
-    setTimeout(() => setMsg(m), 10);
+    setTimeout(() => {
+      setMsgType(type);
+      setMsg(m);
+    }, 10);
   };
 
   const addPlan = (w: Workout) => {
     if (plan.some((x) => x.id === w.id))
-      return say("Already in today\u2019s plan");
-    if (plan.length >= CAP) return say("Plan is full \u2014 5 lifts max");
-    setPlan([...plan, w]);
-    say("Added to today\u2019s plan");
+      return say("Already added to plan", "error");
+    if (plan.length >= CAP) return say("Today's plan is full");
+    setPlan((current) => [...current, w]);
+    setDone((current) => current.filter((id) => id !== w.id));
+    say("Added to today's plan");
   };
   const addSaved = (w: Workout) => {
     if (saved.some((x) => x.id === w.id)) return say("Already saved");
-    setSaved([...saved, w]);
+    setSaved((current) => [...current, w]);
     say("Saved for later");
   };
   const remove = (kind: "plan" | "saved", w: Workout) => {
-    if (kind === "plan") setPlan(plan.filter((x) => x.id !== w.id));
-    else setSaved(saved.filter((x) => x.id !== w.id));
-    say("Removed from " + (kind === "plan" ? "today\u2019s plan" : "saved"));
+    if (kind === "plan") {
+      setPlan((current) => current.filter((x) => x.id !== w.id));
+      setDone((current) => current.filter((id) => id !== w.id));
+      say("Workout removed from today's plan");
+    } else {
+      setSaved((current) => current.filter((x) => x.id !== w.id));
+      say("Removed from saved");
+    }
   };
   const markDone = (w: Workout) => {
-    setDone([...done, w.id]);
-    say("Marked as done \u2014 nice work");
+    if (done.includes(w.id)) return;
+    setDone((current) => (current.includes(w.id) ? current : [...current, w.id]));
+    say("Workout marked as done");
   };
 
   return (
@@ -83,8 +106,23 @@ export default function Store({ children }: { children: ReactNode }) {
       {msg && (
         <div
           role="status"
-          className="fixed top-6 right-6 z-50 rounded-lg border border-[#c6ff00] bg-[#c6ff00] px-5 py-3 text-sm font-bold text-black shadow-[0_8px_30px_rgba(198,255,0,0.28)]"
+          className={`fixed top-6 right-6 z-50 inline-flex items-center gap-2 rounded-lg px-5 py-3 text-sm font-bold shadow-xl ${msgType === "error"
+              ? "border border-red-400/70 bg-red-500 text-white"
+              : "border border-[#c6ff00] bg-[#c6ff00] text-black shadow-[0_8px_30px_rgba(198,255,0,0.28)]"
+            }`}
         >
+          {msgType === "error" && (
+            <svg
+              aria-hidden="true"
+              className="h-4 w-4 shrink-0"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              strokeWidth="2.5"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" d="M6 6l12 12M18 6L6 18" />
+            </svg>
+          )}
           {msg}
         </div>
       )}

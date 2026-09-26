@@ -24,19 +24,28 @@ export default function MyPlan() {
   const { plan, saved, done, ready, remove, markDone } = useStore();
   const [tab, setTab] = useState<Tab>("plan");
   const [sort, setSort] = useState("Duration");
+  const [search, setSearch] = useState("");
 
-  const list = [...(tab === "plan" ? plan : saved)].sort(sorters[sort]);
+  const list = [...(tab === "plan" ? plan : saved)]
+    .filter((w) => {
+      const query = search.trim().toLowerCase();
+      return (
+        !query ||
+        w.title.toLowerCase().includes(query) ||
+        w.categories.some((category) => category.toLowerCase().includes(query))
+      );
+    })
+    .sort(sorters[sort]);
   const sum = (k: "duration" | "calories") =>
     plan.reduce((s, w) => s + w[k], 0);
 
   const tabBtn = (id: Tab, label: string) => (
     <button
       onClick={() => setTab(id)}
-      className={`rounded-lg px-5 py-2 text-[13px] font-bold transition-colors ${
-        tab === id
+      className={`rounded-lg px-5 py-2 text-[13px] font-bold transition-colors ${tab === id
           ? "bg-[#1c222b] text-white shadow-sm"
           : "text-[#9ca3af] hover:text-white"
-      }`}
+        }`}
     >
       {label}
     </button>
@@ -66,9 +75,8 @@ export default function MyPlan() {
           <div key={label} className="px-6 first:pl-0 last:pr-0 sm:px-10">
             <p className="text-[13px] font-medium text-[#9ca3af]">{label}</p>
             <p
-              className={`${bebasNeue.className} mt-2 text-[48px] font-normal leading-none sm:text-[64px] ${
-                isAccent ? "text-[#c6ff00]" : "text-white"
-              }`}
+              className={`${bebasNeue.className} mt-2 text-[48px] font-normal leading-none sm:text-[64px] ${isAccent ? "text-[#c6ff00]" : "text-white"
+                }`}
             >
               {val}
             </p>
@@ -84,34 +92,41 @@ export default function MyPlan() {
           {tabBtn("saved", "Saved")}
         </div>
 
-        {/* Sort Dropdown */}
-        <div className="flex items-center gap-3">
-          <span className="text-[13px] font-medium text-[#9ca3af]">Sort By</span>
-          <div className="relative">
-            <select
-              value={sort}
-              onChange={(e) => setSort(e.target.value)}
-              className="appearance-none rounded-xl border border-[#23272f] bg-[#14171d] py-2 pl-4 pr-9 text-[13px] font-semibold text-white focus:outline-none focus:ring-1 focus:ring-[#c6ff00]"
-            >
-              {Object.keys(sorters).map((s) => (
-                <option key={s} value={s} className="bg-[#14171d] text-white">
-                  {s}
-                </option>
-              ))}
-            </select>
-            <svg
-              className="pointer-events-none absolute right-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-[#9ca3af]"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2.5"
-                d="M19 9l-7 7-7-7"
-              />
-            </svg>
+        <div className="flex flex-wrap items-center justify-end gap-3">
+          <label className="sr-only" htmlFor="plan-search">
+            Search workouts
+          </label>
+          <input
+            id="plan-search"
+            value={search}
+            onChange={(event) => setSearch(event.target.value)}
+            placeholder="Search workouts"
+            className="w-full rounded-xl border border-[#23272f] bg-[#14171d] px-4 py-2 text-[13px] text-white placeholder:text-[#6b7280] focus:outline-none focus:ring-1 focus:ring-[#c6ff00] sm:w-48"
+          />
+          <div className="flex items-center gap-3">
+            <span className="text-[13px] font-medium text-[#9ca3af]">Sort By</span>
+            <div className="relative">
+              <select
+                value={sort}
+                onChange={(e) => setSort(e.target.value)}
+                className="appearance-none rounded-xl border border-[#23272f] bg-[#14171d] py-2 pl-4 pr-9 text-[13px] font-semibold text-white focus:outline-none focus:ring-1 focus:ring-[#c6ff00]"
+              >
+                {Object.keys(sorters).map((s) => (
+                  <option key={s} value={s} className="bg-[#14171d] text-white">
+                    {s}
+                  </option>
+                ))}
+              </select>
+              <svg
+                aria-hidden="true"
+                className="pointer-events-none absolute right-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-[#9ca3af]"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
           </div>
         </div>
       </div>
@@ -130,7 +145,7 @@ export default function MyPlan() {
             NOTHING HERE YET
           </h2>
           <p className="mt-2 text-[14px] text-[#9ca3af]">
-            Browse the library and add a lift to get today moving.
+            {search ? "No workouts match your search." : "Browse the library and add a lift to get today moving."}
           </p>
           <Link
             href="/"
@@ -147,9 +162,8 @@ export default function MyPlan() {
             return (
               <li
                 key={w.id}
-                className={`flex flex-col gap-5 rounded-[20px] border border-[#23272f]/80 bg-[#14171d] p-5 sm:flex-row sm:items-center sm:p-6 ${
-                  isDone ? "opacity-60" : ""
-                }`}
+                className={`flex flex-col gap-5 rounded-[20px] border border-[#23272f]/80 bg-[#14171d] p-5 sm:flex-row sm:items-center sm:p-6 ${isDone ? "opacity-60" : ""
+                  }`}
               >
                 <img
                   src={w.image}

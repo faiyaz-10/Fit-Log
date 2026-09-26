@@ -7,7 +7,7 @@ export default function NotFound() {
         Page not found
       </h1>
       <p className="mt-2 text-sm text-neutral-400">
-        That lift isn't in the library.
+        That lift isn&apos;t in the library.
       </p>
       <Link href="/" className="btn btn-primary mt-6">
         Go to workouts
