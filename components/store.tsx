@@ -78,7 +78,7 @@ export default function Store({ children }: { children: ReactNode }) {
     say("Added to today's plan");
   };
   const addSaved = (w: Workout) => {
-    if (saved.some((x) => x.id === w.id)) return say("Already saved");
+    if (saved.some((x) => x.id === w.id)) return say("Already Saved", "error");
     setSaved((current) => [...current, w]);
     say("Saved for later");
   };
