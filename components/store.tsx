@@ -107,8 +107,8 @@ export default function Store({ children }: { children: ReactNode }) {
         <div
           role="status"
           className={`fixed top-6 right-6 z-50 inline-flex items-center gap-2 rounded-lg px-5 py-3 text-sm font-bold shadow-xl ${msgType === "error"
-              ? "border border-red-400/70 bg-red-500 text-white"
-              : "border border-[#c6ff00] bg-[#c6ff00] text-black shadow-[0_8px_30px_rgba(198,255,0,0.28)]"
+            ? "border border-red-400/70 bg-red-500 text-white"
+            : "border border-[#c6ff00] bg-[#c6ff00] text-black shadow-[0_8px_30px_rgba(198,255,0,0.28)]"
             }`}
         >
           {msgType === "error" && (
