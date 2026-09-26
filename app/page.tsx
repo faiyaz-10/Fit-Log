@@ -55,7 +55,7 @@ export default function Home() {
       </section>
 
       {/* Library Section */}
-      <section id="library" className="mt-16 scroll-mt-6">
+      <section id="library" className="mt-16 scroll-mt-6 pb-16">
         <h2 className="font-sans text-3xl font-black uppercase tracking-tight text-white sm:text-4xl">
           The Library
         </h2>
