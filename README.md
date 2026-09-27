@@ -16,16 +16,16 @@ FitLog is a responsive, dark-themed workout library and personal planning applic
 
 ## 📋 Table of Contents
 
-- [Overview](#-overview)
-- [Key Features](#-key-features)
-- [Technologies Used](#-technologies-used)
-- [How It Works](#-how-it-works)
-- [API](#-api)
-- [Project Structure](#-project-structure)
-- [Getting Started](#-getting-started)
-- [Available Scripts](#-available-scripts)
-- [Responsive Design](#-responsive-design)
-- [Future Improvements](#-future-improvements)
+- [Overview](#overview)
+- [Key Features](#key-features)
+- [Technologies Used](#technologies-used)
+- [How It Works](#how-it-works)
+- [API](#api)
+- [Project Structure](#project-structure)
+- [Getting Started](#getting-started)
+- [Available Scripts](#available-scripts)
+- [Responsive Design](#responsive-design)
+- [Future Improvements](#future-improvements)
 
 ## 🔎 Overview
 
