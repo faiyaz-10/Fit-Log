@@ -36,7 +36,7 @@ export default function MyPlan() {
       );
     })
     .sort(sorters[sort]);
-  const sum = (k: "duration" | "calories") =>
+    const sum = (k: "duration" | "calories") =>
     plan.reduce((s, w) => s + w[k], 0);
 
   const tabBtn = (id: Tab, label: string) => (

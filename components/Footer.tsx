@@ -20,8 +20,6 @@ export default function Footer(): React.JSX.Element {
             FITLOG
           </span>
         </div>
-
-        {/* Right Side: Copyright & Tagline text */}
         <div className="text-sm text-zinc-400 font-normal">
           © {new Date().getFullYear()} FitLog — Workout Library. Train hard, log
           honest.
