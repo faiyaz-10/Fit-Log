@@ -27,6 +27,8 @@ FitLog is a responsive, dark-themed workout library and personal planning applic
 - [Responsive Design](#responsive-design)
 - [Future Improvements](#future-improvements)
 
+<a id="overview"></a>
+
 ## 🔎 Overview
 
 FitLog is designed around a simple workout workflow:
@@ -39,6 +41,8 @@ FitLog is designed around a simple workout workflow:
 6. Mark planned workouts as done or remove them when needed.
 
 Plan, saved, and completion state are restored from browser `localStorage` after a reload.
+
+<a id="key-features"></a>
 
 ## ✨ Key Features
 
@@ -55,6 +59,8 @@ Plan, saved, and completion state are restored from browser `localStorage` after
 - **📱 Responsive Interface** — Use the library and plan views across mobile, tablet, and desktop layouts.
 - **⚡ Loading & Error States** — Includes API loading feedback, failed-request handling, and a custom 404 page.
 
+<a id="technologies-used"></a>
+
 ## 🛠️ Technologies Used
 
 | Technology | Purpose |
@@ -69,11 +75,15 @@ Plan, saved, and completion state are restored from browser `localStorage` after
 | Browser `localStorage` | Client-side persistence for the current FitLog session |
 | FitLog API | Supplies the workout collection and individual workout records |
 
+<a id="how-it-works"></a>
+
 ## ⚙️ How It Works
 
 The home page fetches workouts from the API and derives the visible list from the current search and sort selections. Selecting a workout opens `/workout/[id]`, where it can be added to Today's Plan or saved for later.
 
 The shared `Store` provider keeps plan, saved, completed, and toast state available to the navbar and application pages. The My Plan page derives its metrics from the current plan and persists changes to `localStorage` without requiring a server account.
+
+<a id="api"></a>
 
 ## 🔌 API
 
@@ -83,6 +93,8 @@ FitLog currently uses the following API base URL:
 - [Single workout](https://api.api-store.workers.dev/api/fitlog/:id) — returns one workout record for the detail page.
 
 The client normalizes supported field-name variations from the API into the app's `Workout` type before rendering.
+
+<a id="project-structure"></a>
 
 ## 📁 Project Structure
 
@@ -110,6 +122,8 @@ Fit-Log/
 └── tsconfig.json                # TypeScript configuration
 ```
 
+<a id="getting-started"></a>
+
 ## 🚀 Getting Started
 
 ### Prerequisites
@@ -131,6 +145,8 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) in a browser.
 
+<a id="available-scripts"></a>
+
 ## 📦 Available Scripts
 
 | Command | Description |
@@ -140,6 +156,8 @@ Open [http://localhost:3000](http://localhost:3000) in a browser.
 | `npm run start` | Starts the production server after building |
 | `npm run lint` | Runs ESLint across the project |
 
+<a id="responsive-design"></a>
+
 ## 📱 Responsive Design
 
 The application uses responsive Tailwind layouts throughout the library, detail, and My Plan views:
@@ -148,6 +166,8 @@ The application uses responsive Tailwind layouts throughout the library, detail,
 - Two-column card grids on medium screens
 - Three-column workout library on large screens
 - Responsive navigation, controls, images, and plan actions
+
+<a id="future-improvements"></a>
 
 ## 🔮 Future Improvements
 
