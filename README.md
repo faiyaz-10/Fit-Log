@@ -175,7 +175,3 @@ The application uses responsive Tailwind layouts throughout the library, detail,
 - Add richer filtering by equipment, difficulty, and muscle group.
 - Replace remaining raw workout-row images with optimized `next/image` usage.
 - Add automated component and interaction tests.
-
----
-
-Built as a Programming Hero assignment with a focused, practical workout-planning workflow.
